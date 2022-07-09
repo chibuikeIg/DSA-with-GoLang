@@ -71,6 +71,37 @@ func (ht HashTable) Get(key string) any {
 
 }
 
+func (ht HashTable) Keys() []string {
+
+	var foundKeys []string
+
+	if len(ht.data) == 0 {
+
+		return foundKeys
+	}
+
+	for _, buckets := range ht.data {
+
+		if buckets != nil && len(buckets.([]HashTableBucket)) == 1 {
+
+			foundKeys = append(foundKeys, buckets.([]HashTableBucket)[0].key)
+
+		} else {
+
+			for _, bucket := range buckets.([]HashTableBucket) {
+
+				foundKeys = append(foundKeys, bucket.key)
+
+			}
+
+		}
+
+	}
+
+	return foundKeys
+
+}
+
 func charCode(str string, index int) rune {
 
 	if indexSum := index + 1; indexSum <= len(str) {
@@ -86,12 +117,16 @@ func charCode(str string, index int) rune {
 
 func main() {
 
-	myHashTable := NewHashTable(50)
+	myHashTable := NewHashTable(2)
 
 	myHashTable.Set("grapes", 10000)
+	myHashTable.Set("grapess", 10000)
 
 	myHashTable.Set("name", "peter")
 
 	fmt.Println(myHashTable.Get("grapes"))
+
+	fmt.Println(myHashTable.Keys())
+	fmt.Println(myHashTable.data)
 
 }
