@@ -82,13 +82,15 @@ func (ht HashTable) Keys() []string {
 
 	for _, buckets := range ht.data {
 
-		if buckets != nil && len(buckets.([]HashTableBucket)) == 1 {
+		buckets := buckets.([]HashTableBucket)
 
-			foundKeys = append(foundKeys, buckets.([]HashTableBucket)[0].key)
+		if buckets != nil && len(buckets) == 1 {
+
+			foundKeys = append(foundKeys, buckets[0].key)
 
 		} else {
 
-			for _, bucket := range buckets.([]HashTableBucket) {
+			for _, bucket := range buckets {
 
 				foundKeys = append(foundKeys, bucket.key)
 
@@ -127,6 +129,5 @@ func main() {
 	fmt.Println(myHashTable.Get("grapes"))
 
 	fmt.Println(myHashTable.Keys())
-	fmt.Println(myHashTable.data)
 
 }
