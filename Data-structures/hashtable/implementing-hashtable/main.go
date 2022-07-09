@@ -36,15 +36,35 @@ func (ht HashTable) _hash(key string) int {
 
 func (ht HashTable) Set(key string, val any) {
 
-	ht.data[ht._hash(key)] = HashTableBucket{key, val}
+	address := ht._hash(key)
+
+	if ht.data[address] == nil {
+		ht.data[address] = []HashTableBucket{}
+	}
+
+	ht.data[address] = append(ht.data[address].([]HashTableBucket), HashTableBucket{key, val})
 
 }
 
 func (ht HashTable) Get(key string) any {
 
-	if ht.data[ht._hash(key)] != nil {
-		data := ht.data[ht._hash(key)].(HashTableBucket)
-		return data.val
+	address := ht._hash(key)
+
+	if ht.data[address] != nil {
+
+		currentBucket := ht.data[address].([]HashTableBucket)
+
+		if len(currentBucket) == 1 {
+			return currentBucket[0].val
+		}
+
+		for _, bucket := range currentBucket {
+
+			if bucket.key == key {
+				return bucket.val
+			}
+		}
+
 	}
 
 	return nil
@@ -73,6 +93,6 @@ func main() {
 	myHashTable.Set("name", "peter")
 
 	fmt.Println(myHashTable.Get("grapes"))
+	fmt.Println(myHashTable.Get("grapes"))
 
-	fmt.Println(myHashTable._hash("grapes"))
 }
