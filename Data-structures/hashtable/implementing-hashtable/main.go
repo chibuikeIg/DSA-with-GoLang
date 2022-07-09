@@ -93,6 +93,5 @@ func main() {
 	myHashTable.Set("name", "peter")
 
 	fmt.Println(myHashTable.Get("grapes"))
-	fmt.Println(myHashTable.Get("grapes"))
 
 }
