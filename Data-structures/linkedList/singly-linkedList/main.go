@@ -85,6 +85,13 @@ func (ll *LinkedList) transverse(index int) *Node {
 
 func (ll *LinkedList) Remove(index int) {
 
+	if index == 0 {
+
+		ll.data = ll.data.next
+		ll.length -= 1
+
+		return
+	}
 	headNode := ll.transverse(index - 1)
 
 	holdNodePointer := headNode.next.next
@@ -129,7 +136,7 @@ func main() {
 
 	newLinkedList.Insert(2, 12)
 
-	newLinkedList.Remove(2)
+	newLinkedList.Remove(6)
 
 	newLinkedList.PrintList()
 
