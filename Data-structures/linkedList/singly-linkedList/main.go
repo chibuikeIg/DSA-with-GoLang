@@ -83,6 +83,38 @@ func (ll *LinkedList) transverse(index int) *Node {
 	return currentNode
 }
 
+func (ll *LinkedList) Remove(index int) {
+
+	headNode := ll.transverse(index - 1)
+
+	holdNodePointer := headNode.next.next
+
+	headNode.next = holdNodePointer
+	ll.length -= 1
+
+}
+
+func (ll *LinkedList) PrintList() {
+
+	list := make([]int, ll.length)
+
+	counter := 0
+
+	currentNode := ll.data
+
+	for counter != ll.length {
+
+		list[counter] = currentNode.value
+
+		currentNode = currentNode.next
+
+		counter++
+	}
+
+	fmt.Println(list)
+
+}
+
 func main() {
 
 	newLinkedList := NewLinkedList(10)
@@ -95,6 +127,10 @@ func main() {
 
 	newLinkedList.Insert(3, 22)
 
-	fmt.Println(newLinkedList.data.next.next.next)
+	newLinkedList.Insert(2, 12)
+
+	newLinkedList.Remove(2)
+
+	newLinkedList.PrintList()
 
 }
