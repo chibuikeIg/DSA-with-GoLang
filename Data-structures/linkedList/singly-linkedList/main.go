@@ -122,11 +122,69 @@ func (ll *LinkedList) PrintList() {
 
 }
 
+// brute force
+
+func (ll *LinkedList) Reverse() {
+
+	counter := 0
+
+	currentNode := ll.data
+
+	newLinkedList := NewLinkedList(currentNode.value)
+
+	for counter != ll.length-1 {
+
+		currentNode = currentNode.next
+
+		newLinkedList.Prepend(currentNode.value)
+		counter++
+	}
+
+	ll.data = newLinkedList.data
+
+	return
+}
+
+// more efficient method interms of space complexity
+
+func (ll *LinkedList) Reverse2() {
+
+	if ll.data.next == nil {
+		return
+	}
+
+	firstNode := ll.data
+
+	ll.end = ll.data
+
+	secondNode := ll.data.next
+
+	for secondNode != nil {
+
+		thirdNode := secondNode.next
+
+		secondNode.next = firstNode
+
+		firstNode = secondNode
+
+		secondNode = thirdNode
+
+	}
+
+	ll.data.next = nil
+
+	ll.data = firstNode
+
+	return
+
+}
+
 func main() {
 
 	newLinkedList := NewLinkedList(10)
 
 	newLinkedList.Append(50)
+
 	newLinkedList.Append(40)
 	newLinkedList.Append(70)
 
@@ -136,7 +194,9 @@ func main() {
 
 	newLinkedList.Insert(2, 12)
 
-	newLinkedList.Remove(6)
+	// newLinkedList.Remove(6)
+
+	newLinkedList.Reverse2()
 
 	newLinkedList.PrintList()
 
