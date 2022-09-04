@@ -29,6 +29,30 @@ func (bst *BinarySearchTree) insert(value int) {
 
 }
 
+func (bst *BinarySearchTree) lookup(value int) *Node {
+
+	currentNode := bst.root
+
+	counter := 0
+
+	for counter != bst.length {
+
+		if currentNode.value < value {
+			currentNode = currentNode.right
+		} else if currentNode.value > value {
+			currentNode = currentNode.left
+		} else if currentNode.value == value {
+			break
+		}
+
+		counter++
+
+	}
+
+	return currentNode
+
+}
+
 func (bst *BinarySearchTree) addByTraverse(value int) {
 
 	currentNode := bst.root
@@ -78,5 +102,7 @@ func main() {
 	newBST.insert(4)
 
 	fmt.Println(newBST.root.right.left.value)
+
+	fmt.Println(newBST.lookup(5).left)
 
 }
